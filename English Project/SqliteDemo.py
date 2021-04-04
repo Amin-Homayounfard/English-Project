@@ -2,6 +2,7 @@ import sqlite3 as sq
 import subprocess
 from os import remove
 
+
 conn = sq.connect(":memory:")
 c = conn.cursor()
 
