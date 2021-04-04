@@ -2,28 +2,8 @@ import sqlite3 as sq
 import subprocess
 from os import remove
 
-
-conn = sq.connect(":memory:")
+conn = sq.connect("EnglishDataBase.db")
 c = conn.cursor()
-
-c.execute(
-    """CREATE TABLE english (
-            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-            word TEXT NOT NULL,
-            meaning TEXT NOT NULL,
-            remembering INTEGER NOT NULL,
-            count INTEGER NOT NULL)"""
-)
-
-w = open("test1.txt")
-m = open("test2.txt")
-
-for word, meaning in zip([x.strip() for x in w], [y.strip() for y in m]):
-    c.execute(
-        "INSERT INTO english (word, meaning, remembering, count) VALUES (?, ?, ?, ?)",
-        (word, meaning, 1, 0),
-    )
-    conn.commit()
 
 
 def update_remembering_status(theID, remembering_status):
@@ -96,7 +76,7 @@ while True:
         )
     )
 
-    random_words_by_remembering_status(remembering_status, 2)
+    random_words_by_remembering_status(remembering_status, 10)
     if remembering_status == 1:
         not_remembering_words = list(
             map(
