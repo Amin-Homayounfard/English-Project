@@ -43,7 +43,7 @@ while True:
                 int,
                 input(
                     """Please enter the ID of the words you remember the meaning of with a space: """
-                ),
+                ).split(),
             )
         )
         for id in remembering_words:
