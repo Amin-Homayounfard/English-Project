@@ -58,8 +58,9 @@ def random_words_by_remembering_status(remembering_status, limit):
         + str(limit),
         (remembering_status,),
     )
-    for item in c.fetchall():
-        print("ID:", item[0])
-        print("Word:", item[1])
+    random_words_by_remembering_status.ids = []
+    for i, item in enumerate(c.fetchall(), 1):
+        random_words_by_remembering_status.ids.append(item[0])
+        print(i, ". ", item[1], sep="")
         with conn:
             c.execute("UPDATE english SET count = count + 1 WHERE id = ?", (item[0],))

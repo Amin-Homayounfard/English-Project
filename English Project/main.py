@@ -5,7 +5,6 @@ from os import remove
 conn = sq.connect("EnglishDataBase.db")
 c = conn.cursor()
 
-
 from functions import *
 
 
@@ -31,8 +30,12 @@ while True:
         if len(not_remembering_words) != 0:
             string = ""
             for id in not_remembering_words:
-                update_remembering_status(id, 0)
-                for word in get_word_by_ID(id):
+                update_remembering_status(
+                    random_words_by_remembering_status.ids[id - 1], 0
+                )
+                for word in get_word_by_ID(
+                    random_words_by_remembering_status.ids[id - 1]
+                ):
                     string += word + "\n"
             with open("not_remembering_words.txt", "w") as nr:
                 nr.write(string)
@@ -47,7 +50,21 @@ while True:
             )
         )
         for id in remembering_words:
-            update_remembering_status(id, 1)
+            update_remembering_status(random_words_by_remembering_status.ids[id - 1], 1)
+        not_remembering_words = list(
+            set([i for i in range(1, len(random_words_by_remembering_status.ids) + 1)])
+            - set(remembering_words)
+        )
+        if len(not_remembering_words) != 0:
+            string = ""
+            for id in not_remembering_words:
+                for word in get_word_by_ID(
+                    random_words_by_remembering_status.ids[id - 1]
+                ):
+                    string += word + "\n"
+            with open("not_remembering_words.txt", "w") as nr:
+                nr.write(string)
+            subprocess.Popen("not_remembering_words.txt", shell=True)
     else:
         print("Invalid input!")
         break
