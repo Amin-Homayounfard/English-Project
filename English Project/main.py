@@ -9,22 +9,14 @@ from functions import *
 
 
 while True:
-    remembering_status = int(
-        input(
-            "Enter 0 if you want to measure the recall of words"
-            + " you did not know the meaning of before, and enter 1 if"
-            + " you want to measure the recall of new words: "
-        )
-    )
+    remembering_status = int(input("0: Ask not known words\n1: Ask new words\n"))
 
     random_words_by_remembering_status(remembering_status, 10)
     if remembering_status == 1:
         not_remembering_words = list(
             map(
                 int,
-                input(
-                    """Please enter the ID of words that you do not remember the meaning of with a space: """
-                ).split(),
+                input("Not known words [IDs]: ").split(),
             )
         )
         if len(not_remembering_words) != 0:
@@ -44,9 +36,7 @@ while True:
         remembering_words = list(
             map(
                 int,
-                input(
-                    """Please enter the ID of the words you remember the meaning of with a space: """
-                ).split(),
+                input("Known words [IDs]: ").split(),
             )
         )
         for id in remembering_words:
